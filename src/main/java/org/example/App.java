@@ -1,57 +1,63 @@
 package org.example;
 
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class App {
 
+
     public static void main(String[] args) {
+        Locale.setDefault(Locale.forLanguageTag("sv-SE"));
         Scanner input = new Scanner(System.in);
 
         int[] elpriser = new int[24];
-
-        while(true) {
-            System.out.print("\n Elpriser");
-            System.out.print("\n ========");
-            System.out.print("\n 1. Inmatning");
-            System.out.print("\n 2. Min, Max och Medel");
-            System.out.print("\n 3. Sortera");
-            System.out.print("\n 4. Bästa Laddningstid (4h)");
-            System.out.print("\n e. Avsluta");
-
-            System.out.print("\n Välj ett alternativ: ");
-            char choice = input.next().toLowerCase().charAt(0);
+        boolean exit = false;
+        while(!exit) {
+            System.out.print("\nElpriser\n");
+            System.out.print("========\n");
+            System.out.print("1. Inmatning\n");
+            System.out.print("2. Min, Max och Medel\n");
+            System.out.print("3. Sortera\n");
+            System.out.print("4. Bästa Laddningstid (4h)\n");
+            System.out.print("e. Avsluta\n");
+            var choice = input.nextLine().toLowerCase();
 
             switch (choice) {
-                case '1':
+                case "1":
                     for (int i = 0; i < 24; i++) {
-                        System.out.print("\n Ange elpris per timme " + i + " (i öre per kW/h: ");
-                        elpriser[i] = input.nextInt();
-                    }
+                        try {
+                            elpriser[i] = Integer.parseInt(input.nextLine());
+                        } catch(NumberFormatException e){
+                    System.out.println("Endast heltal tillåtet");
+                }
+            }
                     break;
-                case '2':
-                    System.out.print("\n Du valde Min, Max och Medel.");
+                case "2":
                     minMaxMedel(elpriser);
                     break;
-                case '3':
-                    System.out.print("\n Du valde Sortera.");
+                case "3":
                     sortera(elpriser);
                     break;
-                case '4':
-                    System.out.print("\n Du valde Bästa Laddningstid (4h)");
+                case "4":
                     bastaLaddningstid(elpriser);
                     break;
-                case 'e':
-                    System.out.print("\n Programmet avslutas.");
-                    System.exit(0);
+                case "e":
+                    exit = true;
+                    break;
 
                 default:
                     System.out.print("\n Ogiltligt val. Försök igen.");
                     break;
+
+
             }
+
         }
     }
+
 
     public static void minMaxMedel(int[] elpriser) {
         if (elpriser[0] == 0) {
@@ -81,10 +87,12 @@ public class App {
         }
 
         double medelPris = (double) totalPris / elpriser.length;
-
-        System.out.print("\n Lägsta pris " + minPris + "öre, timme: " +minTimme);
-        System.out.println("\n Högsta pris: " + maxPris + " äre, timme " + maxTimme);
-        System.out.print("\n Medel pris per dygn: " + medelPris + " öre per kWh");
+        String formatMedelPris = String.format("%.2f", medelPris);
+        int nastaMinTimme = (minTimme + 1) % 24;
+        int nastaMaxTimme = (maxTimme + 1) % 24;
+        System.out.print("\nLägsta pris: " + String.format("%02d-%02d, %d öre/kWh", minTimme, nastaMinTimme, minPris));
+        System.out.print("\nHögsta pris: " + String.format("%02d-%02d, %d öre/kWh", maxTimme, nastaMaxTimme, maxPris));
+        System.out.print("\nMedelpris: " + formatMedelPris + " öre/kWh");
     }
 
     public static void sortera(int[] elpriser) {
@@ -101,9 +109,8 @@ public class App {
 
         Arrays.sort(index, (a, b) -> Integer.compare(elpriser[b], elpriser[a]));
 
-        System.out.print("\n Sorterade elpriser:");
         for (int i : index) {
-            System.out.print("\n " + i + ": " + elpriser[i] + " öre per kWh");
+            System.out.print("\n"+String.format("%02d-%02d %d öre", i, (i + 1) % 25, elpriser[i]));
         }
     }
 
@@ -130,14 +137,16 @@ public class App {
 
         double medelPris = (double) billigastePris / antalTimmar;
 
-        System.out.print("\n Bästa laddningstid (4 timmar):");
-        for (int timme = startTimme; timme < startTimme + antalTimmar; timme++) {
-            System.out.print("\n " + timme + "-" + (timme + 1));
+        DecimalFormat decimalFormat = new DecimalFormat("0.0");
+        String formatMedelPris = decimalFormat.format(medelPris);
+
+        int timme = startTimme; {
+            System.out.print("Påbörja laddning klockan " + timme +"\n");
         }
-        System.out.print("\n Medelpris: " + medelPris + " öre per kWh");
+        System.out.print("Medelpris 4h: " + formatMedelPris + " öre/kWh");
     }
 
 
-    }
+}
 
 
