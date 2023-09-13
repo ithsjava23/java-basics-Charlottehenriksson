@@ -26,33 +26,20 @@ public class App {
             var choice = input.nextLine().toLowerCase();
 
             switch (choice) {
-                case "1":
+                case "1" -> {
                     for (int i = 0; i < 24; i++) {
                         try {
                             elpriser[i] = Integer.parseInt(input.nextLine());
-                        } catch(NumberFormatException e){
-                    System.out.println("Endast heltal tillåtet");
+                        } catch (NumberFormatException e) {
+                            System.out.println("Endast heltal tillåtet");
+                        }
+                    }
                 }
-            }
-                    break;
-                case "2":
-                    minMaxMedel(elpriser);
-                    break;
-                case "3":
-                    sortera(elpriser);
-                    break;
-                case "4":
-                    bastaLaddningstid(elpriser);
-                    break;
-                case "e":
-                    exit = true;
-                    break;
-
-                default:
-                    System.out.print("\n Ogiltligt val. Försök igen.");
-                    break;
-
-
+                case "2" -> minMaxMedel(elpriser);
+                case "3" -> sortera(elpriser);
+                case "4" -> bastaLaddningstid(elpriser);
+                case "e" -> exit = true;
+                default -> System.out.print("\n Ogiltligt val. Försök igen.");
             }
 
         }
