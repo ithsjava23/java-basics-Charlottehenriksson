@@ -91,24 +91,26 @@ public class App {
         for (int i = 0; i < index.length; i++) {
             index[i] = i;
             // för att skapa en array med alla elpriser
+            // som börjar på 0 i index +1 varje gång
         }
 
         Arrays.sort(index, (a, b) -> Integer.compare(elpriser[b], elpriser[a]));
+        // sorterar och jämnför priser
 
         for (int i : index) {
             System.out.print("\n"+String.format("%02d-%02d %d öre", i, (i + 1) % 25, elpriser[i]));
+            // 25 för att få med 23-24
         }
     }
 
     public static void bastaLaddningstid(int[] elpriser) {
-        if (elpriser[0] == 0) {
-            System.out.print("\n Ingen inmatning finns. Gör inmaning först.");
-            return;
-        }
+        // en bastaLaddningstid metod
 
         int antalTimmar = 4;
         int billigastePris = Integer.MAX_VALUE;
+        // max value från början för att inte missa ett högre tal
         int startTimme = 0;
+        // fyra timmars intervaller
 
         for (int i = 0; i <= 24 - antalTimmar; i++) {
             int prisSumma = 0;
