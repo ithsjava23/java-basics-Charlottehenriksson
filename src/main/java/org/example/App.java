@@ -47,11 +47,7 @@ public class App {
 
 
     public static void minMaxMedel(int[] elpriser) {
-        if (elpriser[0] == 0) {
-            System.out.print("\n Ingen inmatning finns. Gör inmatning först.");
-            return;
-            // ny metod för minmaxmedel
-        }
+        // metod för minmaxmedel i case 2 med int array elpriser
 
         int minPris = elpriser[0];
         int maxPris = elpriser[0];
