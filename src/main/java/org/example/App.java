@@ -54,6 +54,7 @@ public class App {
         int minTimme = 0;
         int maxTimme = 0;
         int totalPris = 0;
+        // deklarerar alla värdena till 0 innan loopen körs
 
         for (int i = 0; i < elpriser.length; i++) {
             if (elpriser[i] < minPris) {
@@ -67,22 +68,24 @@ public class App {
                 // liknande loop men för att sätta nytt maxpris ist till maxtimme
             }
             totalPris += elpriser[i];
+            // + ihop hela arrayen
         }
 
         double medelPris = (double) totalPris / elpriser.length;
         String formatMedelPris = String.format("%.2f", medelPris);
+        // för att få två decimaler
         int nastaMinTimme = (minTimme + 1) % 24;
         int nastaMaxTimme = (maxTimme + 1) % 24;
+        // vi lägger in en variabel för minsta och dyraste timme
         System.out.print("\nLägsta pris: " + String.format("%02d-%02d, %d öre/kWh", minTimme, nastaMinTimme, minPris));
         System.out.print("\nHögsta pris: " + String.format("%02d-%02d, %d öre/kWh", maxTimme, nastaMaxTimme, maxPris));
         System.out.print("\nMedelpris: " + formatMedelPris + " öre/kWh");
+        // string format för att utskriften ska bli rätt i koden
     }
 
     public static void sortera(int[] elpriser) {
-        if(elpriser[0] == 0) {
-            System.out.print("\n Ingen inmatning finns. Gör en inmatning först.");
-            return;
-        }
+        // skapar metod för att sortera
+
 
         Integer[] index = new Integer[elpriser.length];
         for (int i = 0; i < index.length; i++) {
