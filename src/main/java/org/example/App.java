@@ -10,6 +10,7 @@ public class App {
 
 
     public static void main(String[] args) {
+        System.out.print("Hello There!");
         Locale.setDefault(Locale.forLanguageTag("sv-SE"));
         Scanner input = new Scanner(System.in);
 
@@ -32,6 +33,7 @@ public class App {
                             elpriser[i] = Integer.parseInt(input.nextLine());
                         } catch (NumberFormatException e) {
                             System.out.println("Endast heltal tillåtet");
+                            // matar in värden i elpris arrayen om det inte är ett int värde så fångar numberformatexception upp det
                         }
                     }
                 }
@@ -120,10 +122,12 @@ public class App {
             if (prisSumma < billigastePris) {
                 billigastePris = prisSumma;
                 startTimme = i;
+                // söker igenom 24timmar med tvp loopar för att hitta billigaste timme i en 4 timmars intervall
             }
         }
 
         double medelPris = (double) billigastePris / antalTimmar;
+        // räknar ut medelpris för 4 timmars intervallen
 
         DecimalFormat decimalFormat = new DecimalFormat("0.0");
         String formatMedelPris = decimalFormat.format(medelPris);
